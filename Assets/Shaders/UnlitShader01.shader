@@ -2,8 +2,8 @@ Shader "Unlit/UnlitShader01"
 {
     Properties
     {
-        _Value ("Float Value", float) = 0.1
-        _Color ("Color Plate",Color)=(1,1,1,1)
+        _ColorA("Color A",Color)=(1,1,1,1)
+        _ColorB("Color B",Color)=(1,1,1,1)
     }
     SubShader
     {
@@ -17,10 +17,8 @@ Shader "Unlit/UnlitShader01"
         
             #include "UnityCG.cginc"
 
-
-
-            float _Value;
-            float4 _Color;
+            float4 _ColorA;
+            float4 _ColorB;
 
             struct MeshData
             {
@@ -33,6 +31,7 @@ Shader "Unlit/UnlitShader01"
             {
                 float4 vertex : SV_POSITION;
                 float3 normals : TEXCOORD0;
+                float2 uv:TEXTCOORD1;
             };
 
 
@@ -40,14 +39,15 @@ Shader "Unlit/UnlitShader01"
             {
                 FragmentValue o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.normals=UnityObjectToWorldNormal(v.normal);
+                //o.normals=UnityObjectToWorldNormal(v.normal);
+                o.uv=v.uv;
                 return o;
             }
 
             float4 frag (FragmentValue i) : SV_Target
             {
-                float4 norme=float4(i.normals,1);
-                return norme;
+                float4 color=lerp(_ColorA,_ColorB,i.uv.x);
+                return color;
             }
             ENDCG
         }
