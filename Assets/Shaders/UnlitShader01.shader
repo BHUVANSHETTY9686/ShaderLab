@@ -4,6 +4,9 @@ Shader "Unlit/UnlitShader01"
     {
         _ColorA("Color A",Color)=(1,1,1,1)
         _ColorB("Color B",Color)=(1,1,1,1)
+        _Slider1 ("Slider1",float)=0
+        _Slider2 ("Slider2",float)=1
+
     }
     SubShader
     {
@@ -19,6 +22,8 @@ Shader "Unlit/UnlitShader01"
 
             float4 _ColorA;
             float4 _ColorB;
+            float _Slider1;
+            float _Slider2;
 
             struct MeshData
             {
@@ -34,7 +39,10 @@ Shader "Unlit/UnlitShader01"
                 float2 uv:TEXTCOORD1;
             };
 
-
+            float InverseLerp(float a,float b,float v)
+            {
+                return (v-a)/(b-a);
+            }
             FragmentValue vert (MeshData v)
             {
                 FragmentValue o;
@@ -46,9 +54,13 @@ Shader "Unlit/UnlitShader01"
 
             float4 frag (FragmentValue i) : SV_Target
             {
-                float4 color=lerp(_ColorA,_ColorB,i.uv.x);
-                return color;
+                // float4 color=lerp(_ColorA,_ColorB,i.uv.x);
+                // return color;
+                float t=InverseLerp(_Slider1,_Slider2,i.uv.x);
+                return t;
+
             }
+            
             ENDCG
         }
     }
