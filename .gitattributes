@@ -1,0 +1,54 @@
+# Macro for Unity YAML-based asset files.
+[attr]unityyaml -text merge=unityyamlmerge diff
+
+# Macro for all binary files that should use Git LFS.
+[attr]lfs -text filter=lfs diff=lfs merge=lfs
+
+# Auto-normalized line endings
+* text=auto
+
+# Code
+*.cs text diff=csharp
+
+# Unity Text Assets
+*.meta unityyaml
+*.unity unityyaml
+*.asset unityyaml
+*.prefab unityyaml
+*.mat unityyaml
+*.anim unityyaml
+*.controller unityyaml
+*.overrideController unityyaml
+*.physicMaterial unityyaml
+*.physicsMaterial2D unityyaml
+*.playable unityyaml
+*.mask unityyaml
+*.brush unityyaml
+*.flare unityyaml
+*.fontsettings unityyaml
+*.guiskin unityyaml
+*.giparams unityyaml
+*.renderTexture unityyaml
+*.spriteatlas unityyaml
+*.terrainlayer unityyaml
+*.mixer unityyaml
+*.shadervariants unityyaml
+*.preset unityyaml
+*.asmdef -text diff
+
+# Unity Binary Assets (handled by LFS)
+*.cubemap lfs
+*.unitypackage lfs
+*-[Tt]errain.asset -unityyaml lfs
+*-[Nn]av[Mm]esh.asset -unityyaml lfs
+
+# Common image/audio/video/binary files (use LFS to avoid repository bloat)
+*.jpg lfs
+*.png lfs
+*.psd lfs
+*.mp3 lfs
+*.wav lfs
+*.fbx lfs
+*.zip lfs
+*.dll lfs
+*.exe lfs
